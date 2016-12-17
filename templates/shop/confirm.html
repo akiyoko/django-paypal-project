@@ -1,0 +1,12 @@
+{% extends "../base.html" %}
+
+{% block title %}Confirm{% endblock title %}
+
+{% block content %}
+<form id="myContainer" method="post" action="{% url 'shop:execute' %}">
+    <input type="hidden" name="payment_id" value="{{ payment_id }}" />
+    <input type="hidden" name="payer_id" value="{{ payer_id }}" />
+    {% csrf_token %}
+    <input type="submit" value="Pay Now" />
+</form>
+{% endblock content %}

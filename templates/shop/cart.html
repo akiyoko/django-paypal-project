@@ -1,0 +1,18 @@
+{% extends "../base.html" %}
+
+{% block title %}Cart{% endblock title %}
+
+{% block content %}
+<form id="myContainer" method="post" action="{% url 'shop:checkout' %}">
+    {% csrf_token %}
+</form>
+<script>
+window.paypalCheckoutReady = function() {
+    paypal.checkout.setup('{{ paypal_client_id }}', {
+        environment: '{{ paypal_mode }}',
+        container: 'myContainer'
+    });
+};
+</script>
+<script src="//www.paypalobjects.com/api/checkout.js" async></script>
+{% endblock content %}
