@@ -1,0 +1,39 @@
+{% extends "./base_shop.html" %}
+
+{% block title %}Cart{% endblock title %}
+
+{% block content %}
+{{ block.super }}
+<div id="paypal-button"></div>
+
+<script src="https://www.paypalobjects.com/api/checkout.js" data-version-4></script>
+<script>
+    paypal.Button.render({
+        env: '{{ paypal_mode }}',
+        payment: function (resolve, reject) {
+            paypal.request.post('{% url "shop:create-payment" %}', {csrfmiddlewaretoken: '{{ csrf_token }}'})
+                .then(function (data) {
+                    console.log("data=", data);
+                    if (data.success) {
+                        resolve(data.paymentId);
+                    } else {
+                        reject(data.error);
+                    }
+                })
+                .catch(function (err) {
+                    console.log("err=", err);
+                    reject(err);
+                });
+        },
+        onAuthorize: function (data, actions) {
+            return actions.redirect();
+        },
+        onCancel: function (data, actions) {
+            return actions.redirect();
+        },
+        onError: function (err) {
+            // Show an error page here, when an error occurs
+        }
+    }, '#paypal-button');
+</script>
+{% endblock content %}

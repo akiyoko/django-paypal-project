@@ -1,0 +1,6 @@
+DEBUG = True
+
+# PayPal
+PAYPAL_MODE = '<paypal-mode>'  # 'sandbox' or 'live'
+PAYPAL_CLIENT_ID = '<paypal-client-id>'
+PAYPAL_CLIENT_SECRET = '<paypal-client-secret>'
